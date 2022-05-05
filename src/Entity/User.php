@@ -8,6 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -24,6 +25,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 3,
+     *      max = 20,
+     *      minMessage = "Votre nom d'utilisateur doit contenir au moins {{ limit }} caractères !",
+     *      maxMessage = "Votre nom d'utilisateur ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
      */
     private $username;
 
@@ -35,6 +45,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Length(
+     *      min = 6,
+     *      max = 254,
+     *      minMessage = "Votre mot de passe doit contenir au moins 6 caractères.",
+     *      maxMessage = "Votre mot de passe ne peut pas contenir plus que {{ limit }} caractères !"
+     * )
+     * @Assert\Regex(
+     *     pattern = "^(?=.*[a-z])(?=.*[A-Z])^",
+     *     match = true,
+     *     message = "Le mot de passe doit contenir au moins une minuscule et une majuscule !"
+     * )
      */
     private $password;
 
@@ -45,6 +69,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=50)
+     * * @Assert\NotBlank(
+     *      message = "Ce champ est requis !"
+     * )
+     * @Assert\Email(
+     *      message = "Veuillez entrer une adresse email valide."
+     * )
+     * @Assert\Length(
+     *      max = 254,
+     *      maxMessage = "Votre adresse email ne peut pas contenir plus de {{ limit }} caractères."
+     * )
      */
     private $email;
 
