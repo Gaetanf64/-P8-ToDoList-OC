@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Component\Validator\ConstraintViolationList;
 
+
 class UserTest extends KernelTestCase
 {
     private const EMAIL_CONSTRAINT_MESSAGE = "Veuillez entrer une adresse email valide.";
@@ -34,9 +35,9 @@ class UserTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $kernel = self::bootKernel();
-
-        $this->validator = $kernel->getContainer()->get('validator');
+        static::bootKernel();
+        $container = self::$kernel->getContainer()->get('test.service_container');
+        $this->validator = $container->get('validator');
     }
 
     /**

@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Entity\Task;
 use DateTime;
 use Symfony\Component\Validator\ConstraintViolationList;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TaskTest extends KernelTestCase
 {
@@ -19,9 +21,9 @@ class TaskTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $kernel = self::bootKernel();
-
-        $this->validator = $kernel->getContainer()->get('validator');
+        static::bootKernel();
+        $container = self::$kernel->getContainer()->get('test.service_container');
+        $this->validator = $container->get('validator');
     }
 
     /**

@@ -226,6 +226,9 @@
     "symfony/asset": {
         "version": "v5.4.7"
     },
+    "symfony/browser-kit": {
+        "version": "v5.4.3"
+    },
     "symfony/cache": {
         "version": "v5.4.8"
     },
@@ -247,6 +250,9 @@
             "./bin/console"
         ]
     },
+    "symfony/css-selector": {
+        "version": "v5.4.3"
+    },
     "symfony/dependency-injection": {
         "version": "v5.4.8"
     },
@@ -255,6 +261,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.4.8"
+    },
+    "symfony/dom-crawler": {
+        "version": "v5.4.6"
     },
     "symfony/dotenv": {
         "version": "v5.4.5"
