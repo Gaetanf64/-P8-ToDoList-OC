@@ -75,6 +75,7 @@ Il y a 7 autres users, en voici un
 ## Utiliser les Tests
 
 - Installer Xdebug ([ici](https://xdebug.org/docs/install))
+- Pour utiliser les tests, vous pouvez être amené à cloner le fichier SQL et l'importer dans une base de données "todolist_test"
 - Entrez la commande suivante pour générer la documentation de couverture de test:
 ```
 vendor\bin\phpunit --coverage-html coverage/   
