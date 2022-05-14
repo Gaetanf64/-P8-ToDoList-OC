@@ -15,6 +15,8 @@ class TaskController extends AbstractController
 {
     /**
      * @Route("/tasks", name="task_list")
+     * 
+     * Affiche la liste des tasks pas faites
      */
     public function listAction(TaskRepository $taskRepository)
     {
@@ -25,6 +27,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/done", name="task_list_isDone")
+     * 
+     * Affiche la liste des tasks faites
      */
     public function listActionisDone(TaskRepository $taskRepository)
     {
@@ -35,10 +39,13 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/create", name="task_create")
+     * 
+     * Créer une task
      */
     public function createAction(Request $request, EntityManagerInterface $em)
     {
         $task = new Task();
+
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
@@ -61,6 +68,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit", name="task_edit")
+     * 
+     * Modifier une task
      */
     public function editAction(Task $task, Request $request, EntityManagerInterface $em)
     {
@@ -87,6 +96,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/toggle", name="task_toggle")
+     * 
+     * Affiche une task comme faite
      */
     public function toggleTaskAction(Task $task, EntityManagerInterface $em)
     {
@@ -101,6 +112,8 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete", name="task_delete")
+     * 
+     * Effacer une task
      */
     public function deleteTaskAction(Task $task, EntityManagerInterface $em)
     {

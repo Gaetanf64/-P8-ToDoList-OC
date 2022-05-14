@@ -16,6 +16,8 @@ class UserController extends AbstractController
 {
     /**
      * @Route("/users", name="user_list")
+     * 
+     * Afficher la liste des users
      */
     public function listAction(UserRepository $userRepository)
     {
@@ -26,6 +28,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/create", name="user_create")
+     * 
+     * Créer un user
      */
     public function createAction(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em)
     {
@@ -52,6 +56,8 @@ class UserController extends AbstractController
 
     /**
      * @Route("/users/{id}/edit", name="user_edit")
+     * 
+     * Modifier un user
      */
     public function editAction(User $user, Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em)
     {
