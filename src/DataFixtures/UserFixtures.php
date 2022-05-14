@@ -78,6 +78,9 @@ class UserFixtures extends Fixture
             $user->setPassword($password);
 
             $manager->persist($user);
+
+            //Add Reference
+            $this->addReference('user_' . $key, $user);
         }
 
         $manager->flush();

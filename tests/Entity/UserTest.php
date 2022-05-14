@@ -2,6 +2,7 @@
 
 namespace App\Tests\Entity;
 
+use App\Entity\Task;
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -214,6 +215,25 @@ class UserTest extends KernelTestCase
 
         //Retour du message = message assert de l'entité
         $this->assertEquals(self::PASSWORD_LENGTH_CONSTRAINT_MESSAGE, $errors[0]->getMessage());
+    }
+
+    /**
+     * Test Relation
+     * 
+     */
+    public function testTasks(): void
+    {
+        $this->user = new User();
+        $this->task = new Task();
+
+        $tasks = $this->user->getTasks($this->task->getUser());
+        $this->assertSame($this->user->getTasks(), $tasks);
+
+        $this->user->addtask($this->task);
+        $this->assertCount(1, $this->user->getTasks());
+
+        $this->user->removeTask($this->task);
+        $this->assertCount(0, $this->user->getTasks());
     }
 
     /**

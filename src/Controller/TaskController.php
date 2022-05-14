@@ -106,18 +106,14 @@ class TaskController extends AbstractController
     {
         $user = $this->getUser()->getRoles();
 
-        if ($task->getUser() === null && $user[0] == "ROLE_ADMIN") {
+        if ($task->getUser() === null && $user[0] == "ROLE_ADMIN" || $task->getUser() == $this->getUser()) {
             $em->remove($task);
             $em->flush();
 
             $this->addFlash('success', 'La tâche a bien été supprimée.');
-        }
-
-        if ($task->getUser() == $this->getUser()) {
-            $em->remove($task);
-            $em->flush();
-
-            $this->addFlash('success', sprintf('La tâche %s a bien été supprimée.', $task->getTitle()));
+        } else {
+            $this->addFlash('error', "Vous n'avez pas le droit de supprimer cette tâche !");
+            return $this->redirectToRoute('task_list');
         }
 
         if ($task->isDone() === true) {

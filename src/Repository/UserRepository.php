@@ -19,50 +19,50 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  * @method User[]    findAll()
  * @method User[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
+class UserRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function add(User $entity, bool $flush = true): void
-    {
-        $this->_em->persist($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+    // /**
+    //  * @throws ORMException
+    //  * @throws OptimisticLockException
+    //  */
+    // public function add(User $entity, bool $flush = true): void
+    // {
+    //     $this->_em->persist($entity);
+    //     if ($flush) {
+    //         $this->_em->flush();
+    //     }
+    // }
 
-    /**
-     * @throws ORMException
-     * @throws OptimisticLockException
-     */
-    public function remove(User $entity, bool $flush = true): void
-    {
-        $this->_em->remove($entity);
-        if ($flush) {
-            $this->_em->flush();
-        }
-    }
+    // /**
+    //  * @throws ORMException
+    //  * @throws OptimisticLockException
+    //  */
+    // public function remove(User $entity, bool $flush = true): void
+    // {
+    //     $this->_em->remove($entity);
+    //     if ($flush) {
+    //         $this->_em->flush();
+    //     }
+    // }
 
-    /**
-     * Used to upgrade (rehash) the user's password automatically over time.
-     */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
-        if (!$user instanceof User) {
-            throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
-        }
+    // /**
+    //  * Used to upgrade (rehash) the user's password automatically over time.
+    //  */
+    // public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
+    // {
+    //     if (!$user instanceof User) {
+    //         throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', \get_class($user)));
+    //     }
 
-        $user->setPassword($newHashedPassword);
-        $this->_em->persist($user);
-        $this->_em->flush();
-    }
+    //     $user->setPassword($newHashedPassword);
+    //     $this->_em->persist($user);
+    //     $this->_em->flush();
+    // }
 
     // /**
     //  * @return User[] Returns an array of User objects

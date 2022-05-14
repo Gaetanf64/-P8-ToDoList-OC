@@ -11,7 +11,7 @@ class UserControllerTest extends WebTestCase
     public function testListAction()
     {
         $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $client = $securityControllerTest->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/users');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -21,9 +21,9 @@ class UserControllerTest extends WebTestCase
     public function testEditAction(): void
     {
         $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $client = $securityControllerTest->testLoginSuccessAsAdmin();
 
-        $crawler = $client->request('GET', '/users/10/edit');
+        $crawler = $client->request('GET', '/users/8/edit');
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
         //Test si les champs existent
@@ -38,11 +38,10 @@ class UserControllerTest extends WebTestCase
         $form['user[password][first]'] = 'Test64';
         $form['user[password][second]'] = 'Test64';
         $form['user[email]'] = 'test@gmail.com';
-        $form['user[roles][1]']->tick();
+        $form['user[roles][0]']->tick();
 
         $client->submit($form);
 
-        //static::assertSame(302, $client->getResponse()->getStatusCode());
 
         $crawler = $client->followRedirect();
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -52,7 +51,7 @@ class UserControllerTest extends WebTestCase
     public function testCreateAction()
     {
         $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $client = $securityControllerTest->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/users/create');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -72,9 +71,10 @@ class UserControllerTest extends WebTestCase
         $form['user[roles][0]']->tick();
 
         $client->submit($form);
-        //static::assertSame(302, $client->getResponse()->getStatusCode());
 
         $crawler = $client->followRedirect();
+
         static::assertSame(200, $client->getResponse()->getStatusCode());
+        static::assertSelectorTextContains('h1', "Liste des utilisateurs");
     }
 }

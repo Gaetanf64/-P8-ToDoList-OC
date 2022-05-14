@@ -17,8 +17,8 @@ class SecurityControllerTest extends WebTestCase
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
         $form = $crawler->selectButton("Se connecter")->form([
-            "_username" => "TestUsername",
-            "_password" => 'Test64'
+            "_username" => "Leo",
+            "_password" => 'Passuser'
         ]);
 
         $client->submit($form);
@@ -26,15 +26,32 @@ class SecurityControllerTest extends WebTestCase
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
 
-        //$this->assertResponseStatusCodeSame(Response::HTTP_FOUND);
+        //Pour utiliser $client dans d'autres méthodes
+        return $client;
+    }
 
-        //$client->followRedirect();
+    public function testLoginSuccessAsAdmin()
+    {
+        $client = static::createClient();
 
-        //$this->assertRouteSame('index');
+        $crawler = $client->request('GET', '/login');
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
+
+        $form = $crawler->selectButton("Se connecter")->form([
+            "_username" => "Gaetan",
+            "_password" => 'Gaetan64'
+        ]);
+
+        $client->submit($form);
+        $crawler = $client->followRedirect();
+
+        static::assertSame(200, $client->getResponse()->getStatusCode());
 
         //Pour utiliser $client dans d'autres méthodes
         return $client;
     }
+
 
     public function testLoginFailed()
     {
@@ -53,5 +70,7 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $client->followRedirect();
 
         static::assertSame(200, $client->getResponse()->getStatusCode());
+
+        static::assertSame("Invalid credentials.", $crawler->filter('div.alert.alert-danger')->text());
     }
 }
