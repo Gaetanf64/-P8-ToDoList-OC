@@ -10,8 +10,8 @@ class DefaultControllerTest extends WebTestCase
 {
     public function testIndexAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $client->request('GET', '/');
 

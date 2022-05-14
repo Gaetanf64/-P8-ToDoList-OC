@@ -26,8 +26,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testListActionWithLogin()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $client->request('GET', '/tasks');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -35,8 +35,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $crawler = $client->request('GET', '/tasks/create');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -57,8 +57,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testEditAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $crawler = $client->request('GET', '/tasks/1/edit');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -78,8 +78,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testToggleTaskAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $client->request('GET', '/tasks/1/toggle');
         static::assertSame(302, $client->getResponse()->getStatusCode());
@@ -91,8 +91,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskActionAuthor()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $crawler = $client->request('GET', '/tasks/32/delete');
 
@@ -105,8 +105,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskActionAuthorError()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $crawler = $client->request('GET', '/tasks/33/delete');
 
@@ -121,8 +121,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskActionAnonymeAdmin()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccessAsAdmin();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/tasks/3/delete');
 
@@ -135,8 +135,8 @@ class TaskControllerTest extends WebTestCase
 
     public function testDeleteTaskActionAnonymeUser(): void
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccess();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccess();
 
         $crawler = $client->request('GET', '/tasks/4/delete');
 

@@ -10,8 +10,8 @@ class UserControllerTest extends WebTestCase
 {
     public function testListAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccessAsAdmin();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/users');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -20,8 +20,8 @@ class UserControllerTest extends WebTestCase
 
     public function testEditAction(): void
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccessAsAdmin();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/users/8/edit');
         static::assertSame(200, $client->getResponse()->getStatusCode());
@@ -50,8 +50,8 @@ class UserControllerTest extends WebTestCase
 
     public function testCreateAction()
     {
-        $securityControllerTest = new SecurityControllerTest();
-        $client = $securityControllerTest->testLoginSuccessAsAdmin();
+        $security = new SecurityControllerTest();
+        $client = $security->testLoginSuccessAsAdmin();
 
         $crawler = $client->request('GET', '/users/create');
         static::assertSame(200, $client->getResponse()->getStatusCode());

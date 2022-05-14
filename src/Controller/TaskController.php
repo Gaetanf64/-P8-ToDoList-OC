@@ -42,7 +42,7 @@ class TaskController extends AbstractController
      * 
      * Créer une task
      */
-    public function createAction(Request $request, EntityManagerInterface $em)
+    public function createAction(Request $request, EntityManagerInterface $manager)
     {
         $task = new Task();
 
@@ -55,8 +55,8 @@ class TaskController extends AbstractController
                 ->setIsDone(false)
                 ->setUser($this->getUser());
 
-            $em->persist($task);
-            $em->flush();
+            $manager->persist($task);
+            $manager->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -71,14 +71,14 @@ class TaskController extends AbstractController
      * 
      * Modifier une task
      */
-    public function editAction(Task $task, Request $request, EntityManagerInterface $em)
+    public function editAction(Task $task, Request $request, EntityManagerInterface $manager)
     {
         $form = $this->createForm(TaskType::class, $task);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em->flush();
+            $manager->flush();
 
             $this->addFlash('success', 'La tâche a bien été modifiée.');
 
@@ -99,11 +99,11 @@ class TaskController extends AbstractController
      * 
      * Affiche une task comme faite
      */
-    public function toggleTaskAction(Task $task, EntityManagerInterface $em)
+    public function toggleTaskAction(Task $task, EntityManagerInterface $manager)
     {
         $task->toggle(!$task->isDone());
 
-        $em->flush();
+        $manager->flush();
 
         $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
 
@@ -115,13 +115,13 @@ class TaskController extends AbstractController
      * 
      * Effacer une task
      */
-    public function deleteTaskAction(Task $task, EntityManagerInterface $em)
+    public function deleteTaskAction(Task $task, EntityManagerInterface $manager)
     {
         $user = $this->getUser()->getRoles();
 
         if ($task->getUser() === null && $user[0] == "ROLE_ADMIN" || $task->getUser() == $this->getUser()) {
-            $em->remove($task);
-            $em->flush();
+            $manager->remove($task);
+            $manager->flush();
 
             $this->addFlash('success', 'La tâche a bien été supprimée.');
         } else {
