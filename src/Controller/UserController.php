@@ -31,7 +31,7 @@ class UserController extends AbstractController
      * 
      * Créer un user
      */
-    public function createAction(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $manager)
+    public function createAction(Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -43,8 +43,8 @@ class UserController extends AbstractController
             $password = $encoder->hashPassword($user, $user->getPassword());
             $user->setPassword($password);
 
-            $manager->persist($user);
-            $manager->flush();
+            $em->persist($user);
+            $em->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -59,7 +59,7 @@ class UserController extends AbstractController
      * 
      * Modifier un user
      */
-    public function editAction(User $user, Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $manager)
+    public function editAction(User $user, Request $request, UserPasswordHasherInterface $encoder, EntityManagerInterface $em)
     {
         $form = $this->createForm(UserType::class, $user);
 
@@ -70,7 +70,7 @@ class UserController extends AbstractController
 
             $user->setPassword($password);
 
-            $manager->flush();
+            $em->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 
